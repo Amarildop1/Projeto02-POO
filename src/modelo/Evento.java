@@ -50,11 +50,9 @@ public class Evento {
 	}
 
 
-
 	public String getDataEvento() {
 		return dataEvento;
 	}
-
 	public void setDataEvento(String dataEvento) {
 		this.dataEvento = dataEvento;
 	}
@@ -63,7 +61,6 @@ public class Evento {
 	public String getDescricaoEvento() {
 		return descricaoEvento;
 	}
-
 	public void setDescricaoEvento(String descricaoEvento) {
 		this.descricaoEvento = descricaoEvento;
 	}
@@ -72,7 +69,6 @@ public class Evento {
 	public int getCapacidadeEvento() {
 		return capacidadeEvento;
 	}
-
 	public void setCapacidadeEvento(int capacidadeEvento) {
 		this.capacidadeEvento = capacidadeEvento;
 	}
@@ -81,7 +77,6 @@ public class Evento {
 	public double getPrecoEvento() {
 		return precoEvento;
 	}
-
 	public void setPrecoEvento(double precoEvento) {
 		this.precoEvento = precoEvento;
 	}

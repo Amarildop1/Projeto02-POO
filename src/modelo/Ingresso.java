@@ -1,10 +1,10 @@
 package modelo;
 
-import java.util.Random;
+//import java.util.Random;
 
 public class Ingresso {
 	
-	private static final Random geradorRandom = new Random();
+	//private static final Random geradorRandom = new Random();
 	
 	private String codigoIngresso;
 	private String telefone;
@@ -13,11 +13,17 @@ public class Ingresso {
 	
 	public Ingresso(String telefone, Evento evento, Participante participante) {
 		super();
-		this.codigoIngresso = gerarCodigoIngresso();
-		this.telefone = telefone;
-		this.evento = evento;
-		this.participante = participante;
-	}
+
+		if (telefone != null && !telefone.isEmpty()) {
+            this.codigoIngresso = gerarCodigoIngresso(evento.getIdEvento(), participante.getCPF());
+            this.telefone = telefone;
+            this.evento = evento;
+            this.participante = participante;
+        } else {
+            throw new IllegalArgumentException("O telefone de contato é obrigatório.");
+        }
+
+	} // Final do construtor Ingresso
 
 	
 	public String getCodigoIngresso() {
@@ -29,7 +35,11 @@ public class Ingresso {
 		return telefone;
 	}
 	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+		if (telefone != null && !telefone.isEmpty()) {
+            this.telefone = telefone;
+        } else {
+            throw new IllegalArgumentException("O telefone de contato é obrigatório.");
+        }
 	}
 
 	
@@ -70,10 +80,13 @@ public class Ingresso {
         } else {
             return precoBase;
         }
-	}
 
-	 private String gerarCodigoIngresso() {
-		 return String.valueOf(geradorRandom.nextInt(100000));
+	} // Final do método calcularPreco
+
+
+	//Gera um código para identificar o ingresso com base na regra 11 de Fausto.
+	 private String gerarCodigoIngresso(int idEvento, String cpfParticipante) {
+		 return idEvento + "-" + cpfParticipante;
 	 }
 
 	 

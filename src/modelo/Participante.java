@@ -8,7 +8,8 @@ import java.time.temporal.ChronoUnit;
 public class Participante {
 	private String CPF;
 	private String dataDeNascimento;
-	private ArrayList<Ingresso> ingressos = new ArrayList <> ();
+	//private ArrayList<Ingresso> ingressos = new ArrayList <> ();
+	private ArrayList<Ingresso> ingressos;
 	
 	
 	public Participante(String cpf, String dataDeNascimento, ArrayList<Ingresso> ingressos) {
@@ -38,9 +39,7 @@ public class Participante {
 	public ArrayList<Ingresso> getIngressos() {
 		return ingressos;
 	}
-	public void setAlunos(ArrayList<Ingresso> ingressos) {
-		this.ingressos = ingressos;
-	}
+
 
 
 	//TA FUNCIONANDO
