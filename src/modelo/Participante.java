@@ -6,17 +6,18 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Participante {
-	private String CPF;
-	private String dataDeNascimento;
+	protected String CPF;
+	protected String dataDeNascimento;
 	//private ArrayList<Ingresso> ingressos = new ArrayList <> ();
-	private ArrayList<Ingresso> ingressos;
+	protected ArrayList<Ingresso> ingressos;
+	private ArrayList<Participante> participantes = new ArrayList<>();
 	
 	
-	public Participante(String cpf, String dataDeNascimento, ArrayList<Ingresso> ingressos) {
+	public Participante(String cpf, String dataDeNascimento) {
 		super();
 		CPF = cpf;
 		this.dataDeNascimento = dataDeNascimento;
-		this.ingressos = ingressos;
+		//this.ingressos = ingressos;
 	}
 
 
@@ -58,9 +59,30 @@ public class Participante {
 
 	@Override
 	public String toString() {
-		return "Participante [CPF=" + CPF + ", dataDeNascimento=" + dataDeNascimento + ", ingressos=" + ingressos + "]";
+		return "Participante [CPF: " + CPF + ", Data de Nascimento: " + dataDeNascimento + ", Ingressos: " + ingressos + "]";
 	}
 	
 	
-
+	// ************ TESTANDO ****************
+	public Participante localizarParticipante(String cpf) {
+        for (Participante participante : participantes) {
+            if (participante.getCPF().equals(cpf)) {
+                return participante;
+            }
+        }
+        return null; // Retorna null se o participante não for encontrado
+    }
+	
+	public void adicionar(Ingresso ingresso) {
+        this.ingressos.add(ingresso);
+    }
+    public void removerIngresso(Ingresso ingresso) {
+        this.ingressos.remove(ingresso);
+    }
+    
+    
+    
+    
+    
 } //Final class Participante
+

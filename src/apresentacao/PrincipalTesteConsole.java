@@ -1,5 +1,5 @@
 package apresentacao;
-
+/*
 import modelo.Evento;
 import modelo.Participante;
 import regrasDeNegocio.Fachada;
@@ -7,7 +7,9 @@ import modelo.Convidado;
 import modelo.Ingresso;
 
 import java.util.ArrayList;
+*/
 
+/*
 public class PrincipalTesteConsole {
 
     public static void main(String[] args) {
@@ -83,3 +85,4 @@ public class PrincipalTesteConsole {
         }
     }
 }
+*/

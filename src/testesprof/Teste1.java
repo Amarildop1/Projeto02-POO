@@ -10,7 +10,7 @@ import modelo.Ingresso;
 import modelo.Participante;
 import regrasDeNegocio.Fachada;
 
-/* QUANDO TERMINAR MEU CÓDIGO, TIRO ESTE COMENTÁRIO E UTILIZO DO TESTE
+// QUANDO TERMINAR MEU CÓDIGO, TIRO ESTE COMENTÁRIO E UTILIZO DO TESTE
 
 public class Teste1 {
 
@@ -65,8 +65,8 @@ public class Teste1 {
 			System.out.println("---------listagem de ingressos");
 			for(Ingresso ing : Fachada.listarIngressos()) 
 				System.out.println(
-						"cod="+ing.getCodigo()+ ", "+ ing.getTelefone() + ", preco=" +	ing.calcularPreco() + 
-						", evento preco=" + ing.getEvento().getPreco() + ", arrecadado=" + ing.getEvento().totalArrecadado() + 
+						"cod="+ing.getCodigoIngresso()+ ", "+ ing.getTelefone() + ", preco=" +	ing.calcularPreco() + 
+						", evento preco=" + ing.getEvento().getPrecoEvento() + ", arrecadado=" + ing.getEvento().totalArrecadado() + 
 						", idade=" + ing.getParticipante().calcularIdade());
 
 		} catch (Exception e) {
@@ -100,8 +100,8 @@ public class Teste1 {
 			System.out.println("\n---------listagem de ingressos - final");
 			for(Ingresso ing : Fachada.listarIngressos()) 
 				System.out.println(
-						"cod="+ing.getCodigo()+ ", "+ ing.getTelefone() + ", preco=" +	ing.calcularPreco() + 
-						", evento preco=" + ing.getEvento().getPreco() + ", arrecadado=" + ing.getEvento().totalArrecadado() + 
+						"cod="+ing.getCodigoIngresso()+ ", "+ ing.getTelefone() + ", preco=" +	ing.calcularPreco() + 
+						", evento preco=" + ing.getEvento().getPrecoEvento() + ", arrecadado=" + ing.getEvento().totalArrecadado() + 
 						", idade=" + ing.getParticipante().calcularIdade());
 
 
@@ -117,4 +117,4 @@ public class Teste1 {
 	}
 }
 
-*/
+

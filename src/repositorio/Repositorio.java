@@ -5,29 +5,54 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import modelo.Convidado;
 import modelo.Evento;
 import modelo.Ingresso;
 import modelo.Participante;
 
 
+/*
+ * Implemente os métodos carregarObjetos() e salvarObjetos() da classe Repositório, para ler e gravar
+os objetos a partir dos arquivos texto:
+										eventos.csv  (id;dia/mês/ano;descrição;capacidade;preco)
+										participantes.csv (cpf;dia/mês/ano;empresa)empresa somente para convidados
+										ingressos.csv (código;telefone)
+ * */
 
-/* QUANDO TERMINAR MEU CÓDIGO, TIRO ESTE COMENTÁRIO E UTILIZO ESSE ARQUIVO REPOSITÓRIO
- 
 
+// ESSES ArrayList devem ser static ?
 public class Repositorio {
 	private ArrayList<Evento> eventos = new ArrayList<>();
 	private ArrayList<Participante> participantes = new ArrayList<>();
 	private ArrayList<Ingresso> ingressos = new ArrayList<>();;
 
+	
+	public ArrayList<Evento> getEventos() {
+		return eventos;
+	}
+    public ArrayList<Participante> getParticipantes() {
+        return this.participantes;
+    }
+	public ArrayList<Ingresso> getIngressos() {
+        return ingressos;
+    }
 
+	
+	
 
 	//...
 	
+	
+
 	public Repositorio() {
+		
 		carregarObjetos();
 	}
 	
 	public void carregarObjetos()  	{
+		 //eventos.clear();
+		 //participantes.clear();
+		 //ingressos.clear();
 		// carregar para o repositorio os objetos salvos nos arquivos csv
 		try {
 			//caso os arquivos nao existam, serao criados vazios
@@ -64,7 +89,8 @@ public class Repositorio {
 				descricao = partes[2];
 				capacidade = partes[3];
 				preco = partes[4];
-				evento = new Evento(Integer.parseInt(id), data, descricao,
+				//ALTEREI A ATRIBUIÇÃO ABAIXO (NO ARQ ORIGINAL TEM MAIS PARÂMETROS)
+				evento = new Evento(data, descricao,
 						Integer.parseInt(capacidade), Double.parseDouble(preco));
 				this.adicionar(evento);
 			} 
@@ -105,8 +131,8 @@ public class Repositorio {
 			String codigo, telefone,cpf;
 			int id;
 			Ingresso ingresso;
-			Evento evento;
-			Participante participante;
+			//Evento evento;
+			//Participante participante;
 			File f = new File( new File(".\\ingressos.csv").getCanonicalPath())  ;
 			Scanner arquivo3 = new Scanner(f);	 //  pasta do projeto
 			while(arquivo3.hasNextLine()) 	{
@@ -120,7 +146,7 @@ public class Repositorio {
 				evento = this.localizarEvento(id);
 				participante = this.localizarParticipante(cpf);
 				
-				ingresso = new Ingresso(codigo,telefone,evento,participante);
+				ingresso = new Ingresso(telefone,evento,participante);
 				evento.adicionar(ingresso);
 				participante.adicionar(ingresso);
 				this.adicionar(ingresso);
@@ -139,7 +165,7 @@ public class Repositorio {
 			File f = new File( new File(".\\eventos.csv").getCanonicalPath())  ;
 			FileWriter arquivo1 = new FileWriter(f); 
 			for(Evento e : eventos) 	{
-				arquivo1.write(e.getId()+";"+e.getData()+";"+e.getDescricao()+";"+e.getCapacidade()+";"+e.getPreco()+"\n");	
+				arquivo1.write(e.getIdEvento()+";"+e.getDataEvento()+";"+e.getDescricaoEvento()+";"+e.getCapacidadeEvento()+";"+e.getPrecoEvento()+"\n");	
 			} 
 			arquivo1.close();
 		}
@@ -152,9 +178,9 @@ public class Repositorio {
 			FileWriter arquivo2 = new FileWriter(f) ; 
 			for(Participante p : participantes) {
 				if(p instanceof Convidado c )
-					arquivo2.write(p.getCpf() +";" + p.getNascimento() +";" + c.getEmpresa()+"\n");	
+					arquivo2.write(p.getCPF() +";" + p.getDataDeNascimento() +";" + c.getEmpresa()+"\n");	
 				else
-					arquivo2.write(p.getCpf() +";" + p.getNascimento() +"\n");	
+					arquivo2.write(p.getCPF() +";" + p.getDataDeNascimento() +"\n");	
 
 			} 
 			arquivo2.close();
@@ -166,7 +192,7 @@ public class Repositorio {
 			File f = new File( new File(".\\ingressos.csv").getCanonicalPath())  ;
 			FileWriter arquivo3 = new FileWriter(f) ; 
 			for(Ingresso i : this.getIngressos()) {
-					arquivo3.write(i.getCodigo() +";" + i.getTelefone()+"\n");	
+					arquivo3.write(i.getCodigoIngresso() +";" + i.getTelefone()+"\n");	
 
 			} 
 			arquivo3.close();
@@ -176,7 +202,66 @@ public class Repositorio {
 		}
 
 	}
-}
 
 
-*/
+	/*
+	 * ************* ADICIONANDO MÉTODOS ****************
+	 * 
+	 * */
+    public void adicionar(Evento evento) {
+        eventos.add(evento);
+    }
+
+    public void adicionar(Participante participante) {
+        participantes.add(participante);
+    }
+
+    public void adicionar(Ingresso ingresso) {
+        ingressos.add(ingresso);
+    }
+
+    public Evento localizarEvento(int id) {
+        for (Evento evento : eventos) {
+            if (evento.getIdEvento() == id) {
+                return evento;
+            }
+        }
+        return null; // null se o evento não for encontrado
+    }
+  
+    public Participante localizarParticipante(String cpf) {
+        for (Participante participante : participantes) {
+            if (participante.getCPF().equals(cpf)) {
+                return participante;
+            }
+        }
+        return null; // null se o participante não for encontrado
+    }
+ 
+    public void remover(Evento eventoParaRemover) {
+        eventos.remove(eventoParaRemover);
+    }
+    
+    public void removerParticipante(Participante participante) {
+        participantes.remove(participante);
+    }
+
+    public void removerIngresso(Ingresso ingresso) {
+    	ingressos.remove(ingresso);
+    }
+    
+
+    public Ingresso localizarIngresso(String codigoIngresso) {
+        for (Ingresso ingresso : this.ingressos) {
+            if (ingresso.getCodigoIngresso().equals(codigoIngresso)) {
+                return ingresso;
+            }
+        }
+        return null;
+    }
+
+    
+    
+}//Final class Repositorio
+
+

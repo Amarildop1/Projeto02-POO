@@ -1,13 +1,12 @@
 package modelo;
 
-import java.util.ArrayList;
 
 public class Convidado extends Participante{
 	
 	private String empresa;
 
-	public Convidado(String cpf, String dataDeNascimento, ArrayList<Ingresso> alunos, String empresa) {
-		super(cpf, dataDeNascimento, alunos);
+	public Convidado(String cpf, String dataDeNascimento, String empresa) {
+		super(cpf, dataDeNascimento);
 		this.empresa = empresa;
 	}
 
@@ -22,7 +21,7 @@ public class Convidado extends Participante{
 	
 	@Override
 	public String toString() {
-		return "Convidado [empresa=" + empresa + "]";
+		return "Convidado  [CPF: " + CPF + ", Data de Nascimento: " + dataDeNascimento + ", Ingressos: " + ingressos + ", Eempresa:" + empresa + "]";
 	}
 
 	

@@ -5,116 +5,169 @@ import modelo.Convidado;
 import modelo.Evento;
 import modelo.Ingresso;
 import modelo.Participante;
+import repositorio.Repositorio;
 
 import java.util.ArrayList;
 
 public class Fachada {
+	private static Repositorio repositorio = new Repositorio();
 
-    private ArrayList<Evento> eventos;
-    private ArrayList<Participante> participantes;
+    //private static ArrayList<Evento> eventos;
+    //private static ArrayList<Participante> participantes = new ArrayList<>();
 
-    
+/*   
     public Fachada() {
         eventos = new ArrayList<>();
         participantes = new ArrayList<>();
     }
+*/
 
-
-    public void criarEvento(String dataEvento, String descricaoEvento, int capacidadeEvento, double precoEvento) {
+    public static void criarEvento(String dataEvento, String descricaoEvento, int capacidadeEvento, double precoEvento) {
         Evento novoEvento = new Evento(dataEvento, descricaoEvento, capacidadeEvento, precoEvento);
-        eventos.add(novoEvento);
+        repositorio.adicionar(novoEvento);
     }
 
-    public void criarParticipante(String cpf, String dataDeNascimento) {
-        ArrayList<Ingresso> ingressosParticipante = new ArrayList<>();
-        Participante novoParticipante = new Participante(cpf, dataDeNascimento, ingressosParticipante);
-        participantes.add(novoParticipante);
+    public static void criarParticipante(String cpf, String dataDeNascimento) {
+        //ArrayList<Ingresso> ingressosParticipante = new ArrayList<>();
+        Participante novoParticipante = new Participante(cpf, dataDeNascimento);
+        repositorio.adicionar(novoParticipante);
     }
 
-    public void criarConvidado(String cpf, String dataDeNascimento, String empresa) {
+    public static void criarConvidado(String cpf, String dataDeNascimento, String empresa) {
         ArrayList<Ingresso> ingressosConvidado = new ArrayList<>();
-        Convidado novoConvidado = new Convidado(cpf, dataDeNascimento, ingressosConvidado, empresa);
+        Convidado novoConvidado = new Convidado(cpf, dataDeNascimento, empresa);
         novoConvidado.setEmpresa(empresa);
-        participantes.add(novoConvidado);
+        repositorio.adicionar(novoConvidado);
     }
-
-    public void criarIngresso(String telefone, Evento evento, Participante participante) {
-        Ingresso novoIngresso = new Ingresso(telefone, evento, participante);
+/*
+    public static void criarIngresso(int id, String cpf, String telefone) {
+        Ingresso novoIngresso = new Ingresso(id, cpf, telefone);
         participante.getIngressos().add(novoIngresso);
         //evento.venderIngresso();
     }
-    
+*/    
+    public static void criarIngresso(int id, String cpf, String telefone) {
 
-    public void apagarEvento(int idEvento) {
-        Evento eventoParaRemover = null;
-        for (Evento evento : eventos) {
-            if (evento.getIdEvento() == idEvento) {
-                eventoParaRemover = evento;
-                break;
-            }
+        Evento evento = repositorio.localizarEvento(id);
+
+        if (evento == null) {
+            throw new IllegalArgumentException("Evento não encontrado com o ID fornecido.");
         }
-        if (eventoParaRemover != null) {
-            eventos.remove(eventoParaRemover);
+
+        Participante participante = repositorio.localizarParticipante(cpf);
+
+        if (participante == null) {
+            throw new IllegalArgumentException("Participante não encontrado com o CPF fornecido.");
+        }
+
+        Ingresso ingresso = new Ingresso(telefone, evento, participante);
+
+        repositorio.adicionar(ingresso);
+
+        // Salva as alterações no arquivo
+        repositorio.salvarObjetos();
+    }
+
+    public static void apagarEvento(int idEvento) {
+        Evento eventoParaApagar = repositorio.localizarEvento(idEvento);
+        if (eventoParaApagar != null) {
+            repositorio.remover(eventoParaApagar);
         } else {
             throw new RuntimeException("Evento não encontrado para o ID: " + idEvento);
         }
     }
 
 
-    public void apagarParticipante(String cpf) {
-        Participante participanteParaRemover = null;
-        for (Participante participante : participantes) {
+
+    public static void apagarParticipante(String cpf) {
+
+        Participante participanteParaApagar = null;
+
+        for (Participante participante : repositorio.getParticipantes()) {
             if (participante.getCPF().equals(cpf)) {
-                participanteParaRemover = participante;
+                participanteParaApagar = participante;
                 break;
             }
         }
-        if (participanteParaRemover != null) {
-            participantes.remove(participanteParaRemover);
+
+        // Verificar se o participante foi encontrado
+        if (participanteParaApagar != null) {
+            // Verificar se o último ingresso do participante está ultrapassado
+            if (ultimoIngressoUltrapassado(participanteParaApagar)) {
+                // Remover todos os ingressos do participante do repositório
+                for (Ingresso ingresso : participanteParaApagar.getIngressos()) {
+                    repositorio.removerIngresso(ingresso);
+                }
+
+                // Limpar a lista de ingressos do participante
+                participanteParaApagar.getIngressos().clear();
+
+                // Remover o participante do repositório de participantes
+                repositorio.removerParticipante(participanteParaApagar);
+            } else {
+                throw new IllegalStateException("O participante não pode ser apagado pois o último ingresso não está ultrapassado.");
+            }
         } else {
-            throw new RuntimeException("Participante não encontrado para o CPF: " + cpf);
+            throw new IllegalArgumentException("Participante não encontrado.");
         }
+    } // Final método apagarParticipante
+    
+    
+    private static boolean ultimoIngressoUltrapassado(Participante participante) {
+        // Verificar se o participante possui ingressos
+        if (!participante.getIngressos().isEmpty()) {
+            //Ingresso ultimoIngresso = participante.getIngressos().get(participante.getIngressos().size() - 1);
+
+            // verificar se o ingresso está ultrapassado
+
+            // Retornar true se estiver ultrapassado
+            return true;
+        }
+
+        // Se não tiver ingressos, considera que está ultrapassado
+        return true;
     }
 
 
-    public void apagarIngresso(String codigoIngresso) {
-        Ingresso ingressoParaRemover = null;
-        for (Participante participante : participantes) {
-            for (Ingresso ingresso : participante.getIngressos()) {
-                if (ingresso.getCodigoIngresso().equals(codigoIngresso)) {
-                    ingressoParaRemover = ingresso;
-                    break;
-                }
-            }
-            if (ingressoParaRemover != null) {
-                participante.getIngressos().remove(ingressoParaRemover);
-                break;
-            }
-        }
-        if (ingressoParaRemover == null) {
+    public static void apagarIngresso(String codigoIngresso) {
+        Ingresso ingressoParaRemover = repositorio.localizarIngresso(codigoIngresso);
+
+        if (ingressoParaRemover != null) {
+            // Remover o ingresso do participante e do repositório
+            Participante participante = ingressoParaRemover.getParticipante();
+            participante.removerIngresso(ingressoParaRemover);
+            repositorio.removerIngresso(ingressoParaRemover);
+        } else {
             throw new RuntimeException("Ingresso não encontrado para o código: " + codigoIngresso);
         }
     }
 
-    public ArrayList<Evento> listarEventos() {
-        return eventos;
+
+    public static ArrayList<Evento> listarEventos() {
+        return repositorio.getEventos();
     }
 
-    public ArrayList<Participante> listarParticipantes() {
-        return participantes;
+    public static ArrayList<Participante> listarParticipantes() {
+        return repositorio.getParticipantes() ;
     }
+    
+    public static ArrayList<Ingresso> listarIngressos() {
+        return repositorio.getIngressos();
+    }
+    
 
-    public ArrayList<Ingresso> listarIngressos() {
+/*
+    public static ArrayList<Ingresso> listarIngressos() {
         ArrayList<Ingresso> todosIngressos = new ArrayList<>();
         for (Participante participante : participantes) {
             todosIngressos.addAll(participante.getIngressos());
         }
         return todosIngressos;
     }
-    
+*/ 
 
     
-    
+    // Com o método static o atributo eventos dá problema ainda
  /*   public static void apagarEvento(int idEvento) {
 
         Evento eventoParaRemover = null;

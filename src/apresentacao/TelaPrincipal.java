@@ -47,6 +47,7 @@ public class TelaPrincipal {
 	 */
 	private void initialize() {
 		frmSistemaever = new JFrame();
+		frmSistemaever.setResizable(false);
 		frmSistemaever.setTitle("Sistema 4ever - POO");
 		frmSistemaever.setBounds(350, 100, 650, 500);
 		frmSistemaever.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

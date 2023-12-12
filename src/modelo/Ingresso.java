@@ -23,8 +23,16 @@ public class Ingresso {
             throw new IllegalArgumentException("O telefone de contato é obrigatório.");
         }
 
-	} // Final do construtor Ingresso
+	}// Final do construtor Ingresso
 
+/*
+	public Ingresso(int id, String cpf, String telefone) {
+		
+	}
+*/
+	
+	
+	
 	
 	public String getCodigoIngresso() {
 		return codigoIngresso;
@@ -65,12 +73,11 @@ public class Ingresso {
 				+ ", participante=" + participante + "]";
 	}
 
-	
+
 	//CALCULAR COM BASE NA TABELA DA REGRA DE NEGÓCIO
 	public double calcularPreco() {
 		
 		double precoBase = evento.getPrecoEvento();
-
         int idadeParticipante = participante.calcularIdade();
 
         if (idadeParticipante < 18) {

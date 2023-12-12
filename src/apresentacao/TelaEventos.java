@@ -3,10 +3,14 @@ package apresentacao;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JButton;
 
 public class TelaEventos {
 
 	private JFrame frame;
+	private JButton button;
+	private JButton button_1;
+	private JButton button_2;
 
 	/**
 	 * Launch the application.
@@ -41,6 +45,17 @@ public class TelaEventos {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		button = new JButton("Listar Eventos");
+		button.setBounds(209, 38, 177, 65);
+		frame.getContentPane().add(button);
+		
+		button_1 = new JButton("Criar Evento");
+		button_1.setBounds(53, 59, 135, 23);
+		frame.getContentPane().add(button_1);
+		
+		button_2 = new JButton("Apagar Evento");
+		button_2.setBounds(53, 148, 143, 23);
+		frame.getContentPane().add(button_2);
 	}
-
 }

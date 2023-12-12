@@ -12,6 +12,7 @@ public class Evento {
 	private int capacidadeEvento;
 	private double precoEvento;
 	private ArrayList<Ingresso> ingressos;  // Lista de ingressos associados ao evento
+	private ArrayList<Evento> eventos = new ArrayList<>();
 
 	
 	public Evento(String dataEvento, String descricaoEvento, int capacidadeEvento, double precoEvento) {
@@ -81,14 +82,26 @@ public class Evento {
 		this.precoEvento = precoEvento;
 	}
 
+	
+	
 
-    public ArrayList<Ingresso> getIngressos() {
+    @Override
+	public String toString() {
+		return "Evento [ID: " + idEvento + ", Data: " + dataEvento + ", Descrição: " + descricaoEvento
+				+ ", Capacidade: " + capacidadeEvento + ", Preço: " + precoEvento + ", Ingressos: " + ingressos
+				+ ", Eventos:" + eventos + "]";
+	}
+
+
+
+
+	public ArrayList<Ingresso> getIngressos() {
         return ingressos;
     }
 
 
     public void adicionarIngresso(Ingresso ingresso) {
-        // Verifica se a quantidade de ingressos não ultrapassa a capacidade do evento
+        // Se a quantidade de ingressos não ultrapassa a capacidade do evento
         if (ingressos.size() < capacidadeEvento) {
             this.ingressos.add(ingresso);
         } else {
@@ -100,8 +113,27 @@ public class Evento {
 	public boolean lotado() {
 		return ingressos.size() >= capacidadeEvento;
 	}
+	
+	public double totalArrecadado() {
+		//CALCULAR O VALOR TOTAL DO EVENTO
+		return 0;
+	}
 
 
-
+	// ********** TESTANDO *********************
+	public Evento localizarEvento(int id) {
+        for (Evento evento : eventos) {
+            if (evento.getIdEvento() == id) {
+                return evento;
+            }
+        }
+        return null; // null se o evento não for encontrado
+    }
+	
+	public void adicionar(Ingresso ingresso) {
+        this.ingressos.add(ingresso);
+    }
+	
+	
 } // Final class Evento
 
