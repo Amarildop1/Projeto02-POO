@@ -239,11 +239,13 @@ public class Repositorio {
     public Ingresso localizarIngresso(String codigoIngresso) {
         for (Ingresso ingresso : this.ingressos) {
         	//TESTANDO INGRESSO SE TA NULL
-            System.err.println("Código Ingresso na Lista: " + ingresso.getCodigoIngresso());
+            //System.err.println("Código Ingresso na Lista: " + ingresso.getCodigoIngresso());
 
             if (ingresso.getCodigoIngresso().equals(codigoIngresso)) {
             	//TESTANDO SE EXISTE INGRESSO
             	System.out.println("Ingresso Encontrado!");
+            	//System.out.println("Ingresso:" + ingresso);
+            	//System.out.println("Código Ingresso: " + codigoIngresso);
                 return ingresso;
             }
         }

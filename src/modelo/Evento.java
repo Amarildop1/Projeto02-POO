@@ -114,10 +114,10 @@ public class Evento {
 	
 	public double totalArrecadado() {
 		//CALCULAR O VALOR TOTAL DO EVENTO AQUI AINDA NÃO TA FUNCIONANDO 
-	    double total = 0;
+	    double total = 0.0;
 
 	    for (Ingresso ingresso : ingressos) {
-	        total += ingresso.getEvento().getPrecoEvento();
+	        total += ingresso.calcularPreco();
 	    }
 
 	    return total;
