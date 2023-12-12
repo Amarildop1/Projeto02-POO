@@ -56,16 +56,31 @@ public class Ingresso {
 		this.participante = participante;
 	}
 
-
+	
+/*
 	@Override
 	public String toString() {
 		return "Ingresso [Código do Ingresso: " + codigoIngresso 
 				+ ", Telefone: " + telefone 
-				+ ", Evento: " + evento
+				+ ", Evento: " 
 				+ ", Participante: " + participante + "]";
 	}
+*/
 
+	
+	@Override
+	public String toString() {
+	    // Aqui, você pode ajustar o formato da string conforme necessário
+	    return "Código: " + codigoIngresso + ", Telefone: " + telefone;
+	}
 
+	
+	
+	
+	
+	
+	
+	
 	//CALCULAR COM BASE NA TABELA DA REGRA DE NEGÓCIO - OK
 	public double calcularPreco() {
 		

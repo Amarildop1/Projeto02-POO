@@ -3,7 +3,15 @@ package apresentacao;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
+import modelo.Evento;
+import regrasDeNegocio.Fachada;
+
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
 
 public class TelaEventos {
 
@@ -11,6 +19,7 @@ public class TelaEventos {
 	private JButton button;
 	private JButton button_1;
 	private JButton button_2;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -47,15 +56,25 @@ public class TelaEventos {
 		frame.getContentPane().setLayout(null);
 		
 		button = new JButton("Listar Eventos");
-		button.setBounds(209, 38, 177, 65);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(Evento event : Fachada.listarEventos()) 
+					System.out.println(event);
+			}
+		});
+		button.setBounds(228, 38, 177, 44);
 		frame.getContentPane().add(button);
 		
 		button_1 = new JButton("Criar Evento");
-		button_1.setBounds(53, 59, 135, 23);
+		button_1.setBounds(34, 38, 154, 44);
 		frame.getContentPane().add(button_1);
 		
 		button_2 = new JButton("Apagar Evento");
-		button_2.setBounds(53, 148, 143, 23);
+		button_2.setBounds(34, 105, 143, 23);
 		frame.getContentPane().add(button_2);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 139, 414, 111);
+		frame.getContentPane().add(scrollPane);
 	}
 }

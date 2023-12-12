@@ -21,7 +21,8 @@ public class Convidado extends Participante{
 	
 	@Override
 	public String toString() {
-		return "Convidado  [CPF: " + CPF + ", Data de Nascimento: " + dataDeNascimento + ", Ingressos: " + ingressos + ", Eempresa:" + empresa + "]";
+		return "Convidado: \n [CPF: " + CPF + ", Data de Nascimento: " + dataDeNascimento + 
+				", Ingressos: " + ingressos + ", Empresa:" + empresa + "]";
 	}
 
 	

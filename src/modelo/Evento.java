@@ -84,13 +84,43 @@ public class Evento {
 	}
 
 
-
+/*
     @Override
 	public String toString() {
 		return "Evento [ID: " + idEvento + ", Data: " + dataEvento + ", Descrição: " + descricaoEvento
 				+ ", Capacidade: " + capacidadeEvento + ", Preço: " + precoEvento + ", Ingressos: " + ingressos + "]";
 	}
+*/
+    
+    
+    
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Evento [ID: ").append(idEvento)
+          .append(", Data: ").append(dataEvento)
+          .append(", Descrição: ").append(descricaoEvento)
+          .append(", Capacidade: ").append(capacidadeEvento)
+          .append(", Preço: ").append(precoEvento)
+          .append(", Ingressos: ").append(ingressos);
+        
+        for (Ingresso ingresso : ingressos) {
+            // Aqui, você pode adicionar detalhes dos ingressos sem chamar toString
+            sb.append("Código do Ingresso: ").append(ingresso.getCodigoIngresso()).append(", ");
+        }
+        
+        sb.append("]");
+        return sb.toString();
+    }
 
+    
+    
+    
+    
+    
+    
+    
 
 
 	public ArrayList<Ingresso> getIngressos() {

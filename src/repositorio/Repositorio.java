@@ -3,6 +3,7 @@ package repositorio;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import modelo.Convidado;
@@ -21,7 +22,6 @@ public class Repositorio {
 		return eventos;
 	}
     public ArrayList<Participante> getParticipantes() {
-    	//System.err.println("DENTRO DO getParticipantes");
         return this.participantes;
     }
 	public ArrayList<Ingresso> getIngressos() {
@@ -45,7 +45,7 @@ public class Repositorio {
 			File f2 = new File( new File(".\\participantes.csv").getCanonicalPath() ) ; 
 			File f3 = new File( new File(".\\ingressos.csv").getCanonicalPath() ) ; 
 			if (!f1.exists() || !f2.exists() || !f3.exists()) {
-				//System.out.println("criando arquivo .csv vazio");
+				System.out.println("criando arquivo .csv vazio"); //TAVA COMENTADA NO REPOSITORIO DO PROF
 				FileWriter arquivo1 = new FileWriter(f1); arquivo1.close();
 				FileWriter arquivo2 = new FileWriter(f2); arquivo2.close();
 				FileWriter arquivo3 = new FileWriter(f3); arquivo3.close();
@@ -191,7 +191,6 @@ public class Repositorio {
 
 	/*
 	 * ************* ADICIONANDO MÉTODOS ****************
-	 * 
 	 * */
     public void adicionar(Evento evento) {
         eventos.add(evento);
@@ -213,7 +212,7 @@ public class Repositorio {
         }
         return null; // null se o evento não for encontrado
     }
-  
+ 
     public Participante localizarParticipante(String cpf) {
         for (Participante participante : participantes) {
             if (participante.getCPF().equals(cpf)) {
@@ -243,9 +242,6 @@ public class Repositorio {
 
             if (ingresso.getCodigoIngresso().equals(codigoIngresso)) {
             	//TESTANDO SE EXISTE INGRESSO
-            	System.out.println("Ingresso Encontrado!");
-            	//System.out.println("Ingresso:" + ingresso);
-            	//System.out.println("Código Ingresso: " + codigoIngresso);
                 return ingresso;
             }
         }
