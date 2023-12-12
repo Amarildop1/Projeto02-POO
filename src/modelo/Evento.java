@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.ArrayList;
 
+import repositorio.Repositorio;
+
 public class Evento {
 	
 	private static int proximoIdEvento = 1;
@@ -12,7 +14,7 @@ public class Evento {
 	private int capacidadeEvento;
 	private double precoEvento;
 	private ArrayList<Ingresso> ingressos;  // Lista de ingressos associados ao evento
-	private ArrayList<Evento> eventos = new ArrayList<>();
+	//private ArrayList<Evento> eventos = new ArrayList<>();
 
 	
 	public Evento(String dataEvento, String descricaoEvento, int capacidadeEvento, double precoEvento) {
@@ -50,7 +52,6 @@ public class Evento {
 		return idEvento;
 	}
 
-
 	public String getDataEvento() {
 		return dataEvento;
 	}
@@ -82,16 +83,13 @@ public class Evento {
 		this.precoEvento = precoEvento;
 	}
 
-	
-	
+
 
     @Override
 	public String toString() {
 		return "Evento [ID: " + idEvento + ", Data: " + dataEvento + ", Descrição: " + descricaoEvento
-				+ ", Capacidade: " + capacidadeEvento + ", Preço: " + precoEvento + ", Ingressos: " + ingressos
-				+ ", Eventos:" + eventos + "]";
+				+ ", Capacidade: " + capacidadeEvento + ", Preço: " + precoEvento + ", Ingressos: " + ingressos + "]";
 	}
-
 
 
 
@@ -115,25 +113,28 @@ public class Evento {
 	}
 	
 	public double totalArrecadado() {
-		//CALCULAR O VALOR TOTAL DO EVENTO
-		return 0;
+		//CALCULAR O VALOR TOTAL DO EVENTO AQUI AINDA NÃO TA FUNCIONANDO 
+	    double total = 0;
+
+	    for (Ingresso ingresso : ingressos) {
+	        total += ingresso.getEvento().getPrecoEvento();
+	    }
+
+	    return total;
 	}
 
 
 	// ********** TESTANDO *********************
-	public Evento localizarEvento(int id) {
-        for (Evento evento : eventos) {
-            if (evento.getIdEvento() == id) {
-                return evento;
-            }
-        }
-        return null; // null se o evento não for encontrado
+/*	
+	public void localizarEvento(int id) {
+		return Repositorio.getInstance().localizarEvento(id);
     }
-	
+*/	
 	public void adicionar(Ingresso ingresso) {
         this.ingressos.add(ingresso);
     }
 	
 	
 } // Final class Evento
+
 

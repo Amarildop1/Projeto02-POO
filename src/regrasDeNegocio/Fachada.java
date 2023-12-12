@@ -9,6 +9,14 @@ import repositorio.Repositorio;
 
 import java.util.ArrayList;
 
+
+class ParticipanteDuplicadoException extends RuntimeException {
+    public ParticipanteDuplicadoException(String mensagem) {
+        super(mensagem);
+    }
+}
+
+
 public class Fachada {
 	private static Repositorio repositorio = new Repositorio();
 
@@ -29,10 +37,32 @@ public class Fachada {
 
     public static void criarParticipante(String cpf, String dataDeNascimento) {
         //ArrayList<Ingresso> ingressosParticipante = new ArrayList<>();
+        /*
         Participante novoParticipante = new Participante(cpf, dataDeNascimento);
         repositorio.adicionar(novoParticipante);
+        */
+    	//ESSE CÓDIGO ACIMA FUNCIONA | ESSE ABAIXO É O TESTE PRA ADICIONAR EXCEÇÃO
+    	
+    	//Repositorio repositorio = new Repositorio();  ACREDITO QUE ISSO TAVA DEIXANDO O PARTICIPANTE NULL
+
+        try {
+            // Verifica se já existe um participante com o mesmo CPF
+            Participante participanteExistente = repositorio.localizarParticipante(cpf);
+
+            if (participanteExistente != null) {
+                throw new IllegalArgumentException("Participante já existente com o mesmo CPF e data de nascimento");
+            }
+
+            // Se não existir, cria o participante normalmente
+            Participante participante = new Participante(cpf, dataDeNascimento);
+            repositorio.adicionar(participante);
+        } catch (IllegalArgumentException e) {
+            // Trata a exceção aqui, se necessário
+            System.out.println("Erro ao criar participante: " + e.getMessage());
+        }
     }
 
+    
     public static void criarConvidado(String cpf, String dataDeNascimento, String empresa) {
         ArrayList<Ingresso> ingressosConvidado = new ArrayList<>();
         Convidado novoConvidado = new Convidado(cpf, dataDeNascimento, empresa);
@@ -55,6 +85,12 @@ public class Fachada {
         }
 
         Participante participante = repositorio.localizarParticipante(cpf);
+        
+        // ***** TESTANDO *********
+        //System.err.println("..... PARTICIPANTE: " + participante);
+        //System.err.println("..... REPOSITÓRIO: " + repositorio);
+        //System.err.println("..... getParticipantes(): " + repositorio.getParticipantes());
+
 
         if (participante == null) {
             throw new IllegalArgumentException("Participante não encontrado com o CPF fornecido.");
@@ -78,7 +114,6 @@ public class Fachada {
     }
 
 
-
     public static void apagarParticipante(String cpf) {
 
         Participante participanteParaApagar = null;
@@ -89,6 +124,8 @@ public class Fachada {
                 break;
             }
         }
+        //TESTANDO
+        //System.err.println("participanteParaApagar: " + participanteParaApagar);
 
         // Verificar se o participante foi encontrado
         if (participanteParaApagar != null) {
@@ -120,12 +157,10 @@ public class Fachada {
 
             // verificar se o ingresso está ultrapassado
 
-            // Retornar true se estiver ultrapassado
-            return true;
+            return true; // Retornar true se estiver ultrapassado
         }
 
-        // Se não tiver ingressos, considera que está ultrapassado
-        return true;
+        return true; // Se não tiver ingressos, considera que está ultrapassado
     }
 
 

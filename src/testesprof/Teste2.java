@@ -7,7 +7,7 @@ package testesprof;
 
 import regrasDeNegocio.Fachada;
 
-/* QUANDO TERMINAR MEU CÓDIGO, TIRO ESTE COMENTÁRIO E UTILIZO DO TESTE
+
 
 public class Teste2 {
 
@@ -106,4 +106,3 @@ public class Teste2 {
 }
 
 
-*/

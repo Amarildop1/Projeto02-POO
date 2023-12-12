@@ -1,10 +1,7 @@
 package modelo;
 
-//import java.util.Random;
 
 public class Ingresso {
-	
-	//private static final Random geradorRandom = new Random();
 	
 	private String codigoIngresso;
 	private String telefone;
@@ -25,13 +22,6 @@ public class Ingresso {
 
 	}// Final do construtor Ingresso
 
-/*
-	public Ingresso(int id, String cpf, String telefone) {
-		
-	}
-*/
-	
-	
 	
 	
 	public String getCodigoIngresso() {
@@ -69,12 +59,12 @@ public class Ingresso {
 
 	@Override
 	public String toString() {
-		return "Ingresso [codigoIngresso=" + codigoIngresso + ", telefone=" + telefone + ", evento=" + evento
-				+ ", participante=" + participante + "]";
+		return "Ingresso [Código do Ingresso: " + codigoIngresso + ", Telefone: " + telefone + ", Evento: " + evento
+				+ ", Participante: " + participante + "]";
 	}
 
 
-	//CALCULAR COM BASE NA TABELA DA REGRA DE NEGÓCIO
+	//CALCULAR COM BASE NA TABELA DA REGRA DE NEGÓCIO - OK
 	public double calcularPreco() {
 		
 		double precoBase = evento.getPrecoEvento();
@@ -99,4 +89,5 @@ public class Ingresso {
 	 
 	 
 } // Final class Ingresso
+
 

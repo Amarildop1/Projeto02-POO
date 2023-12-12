@@ -10,14 +10,14 @@ public class Participante {
 	protected String dataDeNascimento;
 	//private ArrayList<Ingresso> ingressos = new ArrayList <> ();
 	protected ArrayList<Ingresso> ingressos;
-	private ArrayList<Participante> participantes = new ArrayList<>();
+	//private ArrayList<Participante> participantes = new ArrayList<>();
 	
 	
 	public Participante(String cpf, String dataDeNascimento) {
 		super();
 		CPF = cpf;
 		this.dataDeNascimento = dataDeNascimento;
-		//this.ingressos = ingressos;
+		this.ingressos = new ArrayList<>(); // TESTANDO ISSO
 	}
 
 
@@ -64,6 +64,7 @@ public class Participante {
 	
 	
 	// ************ TESTANDO ****************
+/* QUANDO TIRAR ESSE COMENTÁRIO, TBEM TIRAR O DA LINHA 13 (ARRAYLIST DE PARTICIPANTES)
 	public Participante localizarParticipante(String cpf) {
         for (Participante participante : participantes) {
             if (participante.getCPF().equals(cpf)) {
@@ -72,6 +73,7 @@ public class Participante {
         }
         return null; // Retorna null se o participante não for encontrado
     }
+*/
 	
 	public void adicionar(Ingresso ingresso) {
         this.ingressos.add(ingresso);
@@ -85,4 +87,5 @@ public class Participante {
     
     
 } //Final class Participante
+
 

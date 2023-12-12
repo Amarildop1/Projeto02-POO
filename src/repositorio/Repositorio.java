@@ -11,38 +11,23 @@ import modelo.Ingresso;
 import modelo.Participante;
 
 
-/*
- * Implemente os métodos carregarObjetos() e salvarObjetos() da classe Repositório, para ler e gravar
-os objetos a partir dos arquivos texto:
-										eventos.csv  (id;dia/mês/ano;descrição;capacidade;preco)
-										participantes.csv (cpf;dia/mês/ano;empresa)empresa somente para convidados
-										ingressos.csv (código;telefone)
- * */
-
-
-// ESSES ArrayList devem ser static ?
 public class Repositorio {
 	private ArrayList<Evento> eventos = new ArrayList<>();
 	private ArrayList<Participante> participantes = new ArrayList<>();
 	private ArrayList<Ingresso> ingressos = new ArrayList<>();;
 
-	
+
 	public ArrayList<Evento> getEventos() {
 		return eventos;
 	}
     public ArrayList<Participante> getParticipantes() {
+    	//System.err.println("DENTRO DO getParticipantes");
         return this.participantes;
     }
 	public ArrayList<Ingresso> getIngressos() {
         return ingressos;
     }
 
-	
-	
-
-	//...
-	
-	
 
 	public Repositorio() {
 		
@@ -131,8 +116,8 @@ public class Repositorio {
 			String codigo, telefone,cpf;
 			int id;
 			Ingresso ingresso;
-			//Evento evento;
-			//Participante participante;
+			//Evento evento;    // Lá em cima já foi declarada
+			//Participante participante;    // Lá em cima já foi declarada
 			File f = new File( new File(".\\ingressos.csv").getCanonicalPath())  ;
 			Scanner arquivo3 = new Scanner(f);	 //  pasta do projeto
 			while(arquivo3.hasNextLine()) 	{
@@ -253,7 +238,12 @@ public class Repositorio {
 
     public Ingresso localizarIngresso(String codigoIngresso) {
         for (Ingresso ingresso : this.ingressos) {
+        	//TESTANDO INGRESSO SE TA NULL
+            System.err.println("Código Ingresso na Lista: " + ingresso.getCodigoIngresso());
+
             if (ingresso.getCodigoIngresso().equals(codigoIngresso)) {
+            	//TESTANDO SE EXISTE INGRESSO
+            	System.out.println("Ingresso Encontrado!");
                 return ingresso;
             }
         }
