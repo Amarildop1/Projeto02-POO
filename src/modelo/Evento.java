@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.ArrayList;
 
-import repositorio.Repositorio;
 
 public class Evento {
 	
@@ -30,9 +29,8 @@ public class Evento {
             } else {
                 throw new IllegalArgumentException("A capacidade do evento deve ser no mínimo 2 ingressos.");
             }
-
-            // Preço do evento não pode ser negativo
-            if (precoEvento >= 0) {
+            
+            if (precoEvento >= 0) { // Preço do evento não pode ser negativo
                 this.precoEvento = precoEvento;
             } else {
                 throw new IllegalArgumentException("O preço do evento não pode ser negativo.");
@@ -84,15 +82,10 @@ public class Evento {
 	}
 
 
-/*
-    @Override
-	public String toString() {
-		return "Evento [ID: " + idEvento + ", Data: " + dataEvento + ", Descrição: " + descricaoEvento
-				+ ", Capacidade: " + capacidadeEvento + ", Preço: " + precoEvento + ", Ingressos: " + ingressos + "]";
-	}
-*/
-    
-    
+	public ArrayList<Ingresso> getIngressos() {
+        return ingressos;
+    }
+
     
     
     @Override
@@ -106,7 +99,6 @@ public class Evento {
           .append(", Ingressos: ").append(ingressos);
         
         for (Ingresso ingresso : ingressos) {
-            // Aqui, você pode adicionar detalhes dos ingressos sem chamar toString
             sb.append("Código do Ingresso: ").append(ingresso.getCodigoIngresso()).append(", ");
         }
         
@@ -114,18 +106,14 @@ public class Evento {
         return sb.toString();
     }
 
+/*
+    @Override
+	public String toString() {
+		return "Evento [ID: " + idEvento + ", Data: " + dataEvento + ", Descrição: " + descricaoEvento
+				+ ", Capacidade: " + capacidadeEvento + ", Preço: " + precoEvento + ", Ingressos: " + ingressos + "]";
+	}
+*/
     
-    
-    
-    
-    
-    
-    
-
-
-	public ArrayList<Ingresso> getIngressos() {
-        return ingressos;
-    }
 
 
     public void adicionarIngresso(Ingresso ingresso) {
@@ -154,12 +142,7 @@ public class Evento {
 	}
 
 
-	// ********** TESTANDO *********************
-/*	
-	public void localizarEvento(int id) {
-		return Repositorio.getInstance().localizarEvento(id);
-    }
-*/	
+	//CREIO QUE É CÓDIGO VELHO
 	public void adicionar(Ingresso ingresso) {
         this.ingressos.add(ingresso);
     }

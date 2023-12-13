@@ -9,23 +9,18 @@ import repositorio.Repositorio;
 
 import java.util.ArrayList;
 
+import excecoes.ApagarEventoComIngressosException;
+import excecoes.ApagarParticipanteComIngressosException;
+import excecoes.CapacidadeMaximaExcedidaException;
 import excecoes.ConvidadoSemEmpresaException;
 import excecoes.DataNascimentoInvalidaException;
+import excecoes.IngressoDuplicadoException;
 import excecoes.ParticipanteDuplicadoException;
 
 
 public class Fachada {
 	private static Repositorio repositorio = new Repositorio();
 
-    //private static ArrayList<Evento> eventos;
-    //private static ArrayList<Participante> participantes = new ArrayList<>();
-
-/*   
-    public Fachada() {
-        eventos = new ArrayList<>();
-        participantes = new ArrayList<>();
-    }
-*/
 
     public static void criarEvento(String dataEvento, String descricaoEvento, int capacidadeEvento, double precoEvento) {
         Evento novoEvento = new Evento(dataEvento, descricaoEvento, capacidadeEvento, precoEvento);
@@ -33,15 +28,12 @@ public class Fachada {
     }
 
     
-    
-    
     public static void criarParticipante(String cpf, String dataDeNascimento) throws Exception {
         try {
             if (dataDeNascimento.isEmpty()) {
                 throw new DataNascimentoInvalidaException("Data de nascimento não pode ser vazia");
             }
 
-            // Verifica se já existe um participante com o mesmo CPF
             Participante participanteExistente = repositorio.localizarParticipante(cpf);
 
             if (participanteExistente != null) {
@@ -57,46 +49,8 @@ public class Fachada {
         }
     }
 
-    
-    
-    
-    
-    
-    
-    
-   /* 
-    public static void criarParticipante(String cpf, String dataDeNascimento) {
-        //ArrayList<Ingresso> ingressosParticipante = new ArrayList<>();
-        
-        //Participante novoParticipante = new Participante(cpf, dataDeNascimento);
-        //repositorio.adicionar(novoParticipante);
-        
-    	//ESSE CÓDIGO ACIMA FUNCIONA | ESSE ABAIXO É O TESTE PRA ADICIONAR EXCEÇÃO
-    	
-    	//Repositorio repositorio = new Repositorio();  ACREDITO QUE ISSO TAVA DEIXANDO O PARTICIPANTE NULL
 
-        try {
-            // Verifica se já existe um participante com o mesmo CPF
-            Participante participanteExistente = repositorio.localizarParticipante(cpf);
 
-            if (participanteExistente != null) {
-                throw new ParticipanteDuplicadoException("Participante já existente com o mesmo CPF e data de nascimento");
-            }
-
-            // Se não existir, cria o participante normalmente
-            Participante participante = new Participante(cpf, dataDeNascimento);
-            repositorio.adicionar(participante);
-        } catch (ParticipanteDuplicadoException e) {
-            // Trata a exceção aqui, se necessário
-            System.out.println("Erro ao criar participante: " + e.getMessage());
-        }
-    }
-*/
-    
-    
-    
-    
-    
     public static void criarConvidado(String cpf, String dataDeNascimento, String empresa) throws Exception {
         try {
             // Verifica se já existe um participante com o mesmo CPF
@@ -118,55 +72,8 @@ public class Fachada {
         }
     }
 
-    
-    
-    
-    
-    
-    
 
-    
-    /*
-    public static void criarConvidado(String cpf, String dataDeNascimento, String empresa) {
-        try {
-            // Verifica se já existe um participante com o mesmo CPF
-            Participante participanteExistente = repositorio.localizarParticipante(cpf);
-
-            if (participanteExistente != null) {
-                throw new ParticipanteDuplicadoException("Participante já existente com o mesmo CPF e data de nascimento");
-            }
-
-            // Se não existir, cria o participante como convidado
-            Participante participante = new Convidado(cpf, dataDeNascimento, empresa);
-            repositorio.adicionar(participante);
-        } catch (ParticipanteDuplicadoException e) {
-            // Trata a exceção aqui, se necessário
-            System.out.println("Erro ao criar convidado: " + e.getMessage());
-        }
-    }
-*/    
-    
-
-    
-    
-/*    
-    public static void criarConvidado(String cpf, String dataDeNascimento, String empresa) {
-        ArrayList<Ingresso> ingressosConvidado = new ArrayList<>();
-        Convidado novoConvidado = new Convidado(cpf, dataDeNascimento, empresa);
-        novoConvidado.setEmpresa(empresa);
-        repositorio.adicionar(novoConvidado);
-    }
-*/ 
-    
-    
-    
-/*
-    public static void criarIngresso(int id, String cpf, String telefone) {
-        Ingresso novoIngresso = new Ingresso(id, cpf, telefone);
-        participante.getIngressos().add(novoIngresso);
-        //evento.venderIngresso();
-    }
-*/    
+ 
     public static void criarIngresso(int id, String cpf, String telefone) {
 
         Evento evento = repositorio.localizarEvento(id);
@@ -176,33 +83,47 @@ public class Fachada {
         }
 
         Participante participante = repositorio.localizarParticipante(cpf);
-        
-        // ***** TESTANDO *********
-        //System.err.println("..... PARTICIPANTE: " + participante);
-        //System.err.println("..... REPOSITÓRIO: " + repositorio);
-        //System.err.println("..... getParticipantes(): " + repositorio.getParticipantes());
-
 
         if (participante == null) {
             throw new IllegalArgumentException("Participante não encontrado com o CPF fornecido.");
         }
 
         Ingresso ingresso = new Ingresso(telefone, evento, participante);
-
+        
+        // Verificar se já existe um ingresso com o mesmo código
+        if (repositorio.localizarIngresso(ingresso.getCodigoIngresso()) != null) {
+            throw new IngressoDuplicadoException("Ingresso duplicado: já existe um ingresso com o mesmo código.");
+        }
+        
+//        if (evento.getIngressos().size() > evento.getCapacidadeEvento()) {
+//            throw new CapacidadeMaximaExcedidaException("Capacidade máxima de ingressos atingida para o evento.");
+//        }
+        if (evento.lotado()) {
+        	throw new CapacidadeMaximaExcedidaException("Capacidade máxima de ingressos atingida para o evento.");
+        }
+        
         repositorio.adicionar(ingresso);
 
         // Salva as alterações no arquivo
         repositorio.salvarObjetos();
     }
 
+
+
     public static void apagarEvento(int idEvento) {
         Evento eventoParaApagar = repositorio.localizarEvento(idEvento);
+        
         if (eventoParaApagar != null) {
             repositorio.remover(eventoParaApagar);
         } else {
             throw new RuntimeException("Evento não encontrado para o ID: " + idEvento);
         }
+
+        if (!eventoParaApagar.getIngressos().isEmpty()) {
+            throw new ApagarEventoComIngressosException("Não é possível apagar um evento com ingressos associados.");
+        }
     }
+
 
 
     public static void apagarParticipante(String cpf) {
@@ -215,22 +136,19 @@ public class Fachada {
                 break;
             }
         }
-        //TESTANDO
-        //System.err.println("participanteParaApagar: " + participanteParaApagar);
-
+        
         // Verificar se o participante foi encontrado
         if (participanteParaApagar != null) {
             // Verificar se o último ingresso do participante está ultrapassado
             if (ultimoIngressoUltrapassado(participanteParaApagar)) {
-                // Remover todos os ingressos do participante do repositório
+                
+            	// Remover todos os ingressos do participante do repositório
                 for (Ingresso ingresso : participanteParaApagar.getIngressos()) {
                     repositorio.removerIngresso(ingresso);
                 }
 
-                // Limpar a lista de ingressos do participante
-                participanteParaApagar.getIngressos().clear();
+                participanteParaApagar.getIngressos().clear(); // Limpar a lista de ingressos do participante
 
-                // Remover o participante do repositório de participantes
                 repositorio.removerParticipante(participanteParaApagar);
             } else {
                 throw new IllegalStateException("O participante não pode ser apagado pois o último ingresso não está ultrapassado.");
@@ -238,9 +156,13 @@ public class Fachada {
         } else {
             throw new IllegalArgumentException("Participante não encontrado.");
         }
+        
+
+
     } // Final método apagarParticipante
     
-    
+
+
     private static boolean ultimoIngressoUltrapassado(Participante participante) {
         // Verificar se o participante possui ingressos
         if (!participante.getIngressos().isEmpty()) {
@@ -281,45 +203,6 @@ public class Fachada {
         return repositorio.getIngressos();
     }
     
-
-/*
-    public static ArrayList<Ingresso> listarIngressos() {
-        ArrayList<Ingresso> todosIngressos = new ArrayList<>();
-        for (Participante participante : participantes) {
-            todosIngressos.addAll(participante.getIngressos());
-        }
-        return todosIngressos;
-    }
-*/ 
-
-    
-    // Com o método static o atributo eventos dá problema ainda
- /*   public static void apagarEvento(int idEvento) {
-
-        Evento eventoParaRemover = null;
-
-        // Encontrar o evento pelo ID
-        for (Evento evento : eventos) {
-            if (evento.getIdEvento() == idEvento) {
-                eventoParaRemover = evento;
-                break;
-            }
-        }
-
-        // Verificar se o evento foi encontrado
-        if (eventoParaRemover != null) {
-            // Verificar se o evento não possui ingressos
-            if (eventoParaRemover.getIngressos().isEmpty()) {
-                // Remover o evento
-                eventos.remove(eventoParaRemover);
-            } else {
-                throw new IllegalStateException("O evento não pode ser apagado pois possui ingressos associados.");
-            }
-        } else {
-            throw new IllegalArgumentException("Evento não encontrado.");
-        }
-    }
-*/
 
 
 } // Final da class Fachada

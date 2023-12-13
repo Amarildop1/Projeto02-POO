@@ -56,31 +56,15 @@ public class Ingresso {
 		this.participante = participante;
 	}
 
-	
-/*
-	@Override
-	public String toString() {
-		return "Ingresso [Código do Ingresso: " + codigoIngresso 
-				+ ", Telefone: " + telefone 
-				+ ", Evento: " 
-				+ ", Participante: " + participante + "]";
-	}
-*/
 
 	
 	@Override
 	public String toString() {
-	    // Aqui, você pode ajustar o formato da string conforme necessário
 	    return "Código: " + codigoIngresso + ", Telefone: " + telefone;
 	}
 
-	
-	
-	
-	
-	
-	
-	
+
+
 	//CALCULAR COM BASE NA TABELA DA REGRA DE NEGÓCIO - OK
 	public double calcularPreco() {
 		
@@ -98,12 +82,11 @@ public class Ingresso {
 	} // Final do método calcularPreco
 
 
-	//Gera um código para identificar o ingresso com base na regra 11 de Fausto.
+	//Código para identificar o ingresso com base na regra 11 de Fausto.
 	 private String gerarCodigoIngresso(int idEvento, String cpfParticipante) {
 		 return idEvento + "-" + cpfParticipante;
 	 }
 
-	 
 	 
 } // Final class Ingresso
 

@@ -60,7 +60,7 @@ public class Participante {
 	@Override
 	public String toString() {
 		return "Participante: \n [CPF: " + CPF + ", Data de Nascimento: " + dataDeNascimento + 
-				", Ingressos: " + ingressos + "]" + "\n";
+				", \n Ingressos: " + ingressos + "]" + "\n";
 	}
 	
 	
