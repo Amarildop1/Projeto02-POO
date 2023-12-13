@@ -3,10 +3,14 @@ package apresentacao;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
 
-public class TelaIngressos {
 
-	private JFrame frame;
+public class TelaIngressos extends JFrame{
+
+	private JFrame frameTelaIngressos;
 
 	/**
 	 * Launch the application.
@@ -16,7 +20,7 @@ public class TelaIngressos {
 			public void run() {
 				try {
 					TelaIngressos window = new TelaIngressos();
-					window.frame.setVisible(true);
+					window.frameTelaIngressos.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -28,19 +32,23 @@ public class TelaIngressos {
 	 * Create the application.
 	 */
 	public TelaIngressos() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle("INGRESSOS | Sistema 4ever");
 		initialize();
-		frame.setVisible(true);
+		frameTelaIngressos.setVisible(true);
+		frameTelaIngressos.setLocationRelativeTo(this);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setTitle("INGRESSOS | Sistema 4ever");
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frameTelaIngressos = new JFrame();
+		frameTelaIngressos.setResizable(false);
+		frameTelaIngressos.setTitle("INGRESSOS | Sistema 4ever");
+		frameTelaIngressos.setBounds(100, 100, 539, 433);
+		frameTelaIngressos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameTelaIngressos.getContentPane().setLayout(null);
 	}
 
 }

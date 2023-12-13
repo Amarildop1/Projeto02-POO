@@ -10,20 +10,18 @@ import regrasDeNegocio.Fachada;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
+
 import javax.swing.JLabel;
-import java.awt.Rectangle;
-import java.awt.Dimension;
+import javax.swing.JOptionPane;
 
-public class TelaEventos {
 
-	private JFrame frame;
-	private JButton button;
-	private JButton button_1;
-	private JButton button_2;
-	private JLabel label;
+public class TelaEventos extends JFrame{
+
+	private JFrame frameTelaEventos;
+	private JButton btnListarEventos;
+	private JButton btnCriarEvento;
+	private JButton btnApagarEvento;
+	private JLabel lblExibicaoDeEventos;
 
 	/**
 	 * Launch the application.
@@ -33,7 +31,7 @@ public class TelaEventos {
 			public void run() {
 				try {
 					TelaEventos window = new TelaEventos();
-					window.frame.setVisible(true);
+					window.frameTelaEventos.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,48 +44,59 @@ public class TelaEventos {
 	 */
 	public TelaEventos() {
 		initialize();
-		frame.setVisible(true);
+		frameTelaEventos.setVisible(true);
+		frameTelaEventos.setLocationRelativeTo(this); // PRA FUNCIONAR ISSO AQUI, TIVE QUE COLOCAR ESSA JANELA E A PRINCIPAL PRA HERDAR DE JFrame
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setTitle("EVENTOS | Sistema 4ever - POO");
-		frame.setBounds(100, 100, 503, 352);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frameTelaEventos = new JFrame();
+		frameTelaEventos.setResizable(false);
+		frameTelaEventos.setTitle("EVENTOS | Sistema 4ever");
+		frameTelaEventos.setBounds(100, 100, 539, 433);
+		frameTelaEventos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameTelaEventos.getContentPane().setLayout(null);
 		
-		button = new JButton("Listar Eventos");
-		button.addActionListener(new ActionListener() {
+		btnListarEventos = new JButton("Listar Eventos");
+		btnListarEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for(Evento event : Fachada.listarEventos()) 
 					System.out.println(event);
 				
-				label.setText("Evento: " + Fachada.listarEventos());
+				lblExibicaoDeEventos.setText("Evento: " + Fachada.listarEventos());
 				//Fachada.listarEventos();
 			}
 		});
-		button.setBounds(272, 38, 177, 44);
-		frame.getContentPane().add(button);
+		btnListarEventos.setBounds(301, 54, 160, 44);
+		frameTelaEventos.getContentPane().add(btnListarEventos);
 		
-		button_1 = new JButton("Criar Evento");
-		button_1.addActionListener(new ActionListener() {
+		btnCriarEvento = new JButton("Criar Evento");
+		btnCriarEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCriarEvento telaEvento = new TelaCriarEvento();
 			}
 		});
-		button_1.setBounds(44, 38, 154, 44);
-		frame.getContentPane().add(button_1);
+		btnCriarEvento.setBounds(73, 54, 160, 44);
+		frameTelaEventos.getContentPane().add(btnCriarEvento);
 		
-		button_2 = new JButton("Apagar Evento");
-		button_2.setBounds(166, 103, 143, 23);
-		frame.getContentPane().add(button_2);
+		btnApagarEvento = new JButton("Apagar Evento");
+		btnApagarEvento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int idDoEventoParaApagar;
+				idDoEventoParaApagar = Integer.parseInt(JOptionPane.showInputDialog("Informe o ID:"));
+				Fachada.apagarEvento(idDoEventoParaApagar);
+				
+			}
+		});
+		btnApagarEvento.setBounds(195, 131, 143, 35);
+		frameTelaEventos.getContentPane().add(btnApagarEvento);
 		
-		label = new JLabel("New label");
-		label.setBounds(30, 152, 420, 139);
-		frame.getContentPane().add(label);
+		lblExibicaoDeEventos = new JLabel("Eventos");
+		lblExibicaoDeEventos.setBounds(44, 202, 448, 146);
+		frameTelaEventos.getContentPane().add(lblExibicaoDeEventos);
 
 	}
 }

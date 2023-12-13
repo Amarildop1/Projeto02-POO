@@ -8,16 +8,23 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class TelaPrincipal {
+public class TelaPrincipal extends JFrame{
 
 	private JFrame frmSistemaever;
 	private JButton btnEventos;
 	private JButton btnIngressos;
 	private JButton btnParticipantes;
-	private JLabel label;
+	private JLabel labelTituloPrincipal;
+	private JMenuBar menuBar;
+	private JMenu menuSair;
+	private JMenu menuSobre;
+	private JMenu menuArquivo;
 
 	/**
 	 * Launch the application.
@@ -49,7 +56,7 @@ public class TelaPrincipal {
 		frmSistemaever = new JFrame();
 		frmSistemaever.setResizable(false);
 		frmSistemaever.setTitle("Sistema 4ever - POO");
-		frmSistemaever.setBounds(350, 100, 650, 500);
+		frmSistemaever.setBounds(350, 100, 743, 564);
 		frmSistemaever.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSistemaever.getContentPane().setLayout(null);
 		
@@ -60,17 +67,18 @@ public class TelaPrincipal {
 				TelaEventos telaEventos = new TelaEventos();
 			}
 		});
-		btnEventos.setBounds(73, 142, 145, 83);
+		btnEventos.setBounds(103, 142, 145, 83);
 		frmSistemaever.getContentPane().add(btnEventos);
 		
 		btnIngressos = new JButton("Ingressos");
 		btnIngressos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaIngressos telaIngressos = new TelaIngressos();
+				
 			}
 		});
 		btnIngressos.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnIngressos.setBounds(424, 142, 145, 83);
+		btnIngressos.setBounds(454, 142, 145, 83);
 		frmSistemaever.getContentPane().add(btnIngressos);
 		
 		btnParticipantes = new JButton("Participantes");
@@ -80,12 +88,37 @@ public class TelaPrincipal {
 			}
 		});
 		btnParticipantes.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnParticipantes.setBounds(245, 298, 145, 83);
+		btnParticipantes.setBounds(281, 297, 145, 83);
 		frmSistemaever.getContentPane().add(btnParticipantes);
 		
-		label = new JLabel("Sistema 4ever");
-		label.setFont(new Font("Segoe Print", Font.BOLD, 18));
-		label.setBounds(245, 35, 134, 36);
-		frmSistemaever.getContentPane().add(label);
+		labelTituloPrincipal = new JLabel("Sistema 4ever");
+		labelTituloPrincipal.setFont(new Font("Segoe Print", Font.BOLD, 18));
+		labelTituloPrincipal.setBounds(275, 35, 134, 36);
+		frmSistemaever.getContentPane().add(labelTituloPrincipal);
+		
+		menuBar = new JMenuBar();
+		frmSistemaever.setJMenuBar(menuBar);
+		
+		menuArquivo = new JMenu("Arquivo");
+		menuBar.add(menuArquivo);
+		
+		menuSobre = new JMenu("Sobre");
+		menuSobre.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String sobre = "Sistema 4ever \n v.: 1.0 > Em desenvolvimento \nPOO com Java.";
+				JOptionPane.showMessageDialog(null, sobre, "Sistema 4ever | 2023 ", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		menuBar.add(menuSobre);
+		
+		menuSair = new JMenu("Sair");
+		menuSair.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frmSistemaever.dispose();
+			}
+		});
+		menuBar.add(menuSair);
 	}
 }
