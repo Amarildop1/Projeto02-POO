@@ -3,7 +3,6 @@ package repositorio;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import modelo.Convidado;
@@ -30,7 +29,6 @@ public class Repositorio {
 
 
 	public Repositorio() {
-		
 		carregarObjetos();
 	}
 	
@@ -190,7 +188,7 @@ public class Repositorio {
 
 
 	/*
-	 * ************* ADICIONANDO MÉTODOS ****************
+	 * ********** ADICIONANDO MÉTODOS **********
 	 * */
     public void adicionar(Evento evento) {
         eventos.add(evento);

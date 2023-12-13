@@ -10,7 +10,6 @@ import modelo.Ingresso;
 import modelo.Participante;
 import regrasDeNegocio.Fachada;
 
-// QUANDO TERMINAR MEU CÓDIGO, TIRO ESTE COMENTÁRIO E UTILIZO DO TESTE
 
 public class Teste1 {
 

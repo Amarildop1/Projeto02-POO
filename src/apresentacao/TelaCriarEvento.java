@@ -115,6 +115,7 @@ public class TelaCriarEvento extends JFrame{
 		inputPrecoEvento.setBounds(146, 289, 66, 23);
 		frameTelaCriarEvento.getContentPane().add(inputPrecoEvento);
 		inputPrecoEvento.setColumns(10);
+
 		
 		button = new JButton("SALVAR");
 		button.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -122,13 +123,22 @@ public class TelaCriarEvento extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int capacidade = Integer.parseInt(inputCapacidadeEvento.getText());
 				double preco = Double.parseDouble(inputPrecoEvento.getText());
-				Fachada.criarEvento(inputDataEvento.getText(), inputDescricaoEvento.getText(), capacidade, preco);
-				JOptionPane.showMessageDialog(null, "EVENTO SALVO COM SUCESSO!", "Sistema 4ever", JOptionPane.INFORMATION_MESSAGE);
-				frameTelaCriarEvento.dispose();
+				
+				try {
+					Fachada.criarEvento(inputDataEvento.getText(), inputDescricaoEvento.getText(), capacidade, preco);
+					JOptionPane.showMessageDialog(null, "EVENTO SALVO COM SUCESSO!", "Sistema 4ever", JOptionPane.INFORMATION_MESSAGE);
+					frameTelaCriarEvento.dispose();
+				} catch (Exception exc) {
+					JOptionPane.showMessageDialog(null, exc.getMessage(), "Sistema 4ever", JOptionPane.ERROR_MESSAGE);
+					System.out.println("---> "+exc.getMessage());
+				}
+				
+
 			}
 		});
 		button.setBounds(397, 310, 90, 36);
 		frameTelaCriarEvento.getContentPane().add(button);
+
 		
 		label_1 = new JLabel("R$");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));

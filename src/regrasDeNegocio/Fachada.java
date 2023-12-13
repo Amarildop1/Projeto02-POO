@@ -22,12 +22,14 @@ public class Fachada {
 	private static Repositorio repositorio = new Repositorio();
 
 
+	//CRIAÇÃO DE EVENTO
     public static void criarEvento(String dataEvento, String descricaoEvento, int capacidadeEvento, double precoEvento) {
         Evento novoEvento = new Evento(dataEvento, descricaoEvento, capacidadeEvento, precoEvento);
         repositorio.adicionar(novoEvento);
     }
 
-    
+
+    //CRIAÇÃO DE PARTICIPANTE
     public static void criarParticipante(String cpf, String dataDeNascimento) throws Exception {
         try {
             if (dataDeNascimento.isEmpty()) {
@@ -50,7 +52,7 @@ public class Fachada {
     }
 
 
-
+    //CRIAÇÃO DE PARTICIPANTE CONVIDADO
     public static void criarConvidado(String cpf, String dataDeNascimento, String empresa) throws Exception {
         try {
             // Verifica se já existe um participante com o mesmo CPF
@@ -68,12 +70,12 @@ public class Fachada {
             Participante participante = new Convidado(cpf, dataDeNascimento, empresa);
             repositorio.adicionar(participante);
         } catch (ConvidadoSemEmpresaException exc) {
-        	throw exc; 	// Lançando a exceção de convidado sem empresa - item 3
+        	throw exc; 	// Exceção de convidado sem empresa - item 3
         }
     }
 
 
- 
+    //CRIAÇÃO DE INGRESSO
     public static void criarIngresso(int id, String cpf, String telefone) {
 
         Evento evento = repositorio.localizarEvento(id);
@@ -95,21 +97,22 @@ public class Fachada {
             throw new IngressoDuplicadoException("Ingresso duplicado: já existe um ingresso com o mesmo código.");
         }
         
-//        if (evento.getIngressos().size() > evento.getCapacidadeEvento()) {
-//            throw new CapacidadeMaximaExcedidaException("Capacidade máxima de ingressos atingida para o evento.");
-//        }
+        if (evento.getIngressos().size() > evento.getCapacidadeEvento()) {
+            throw new CapacidadeMaximaExcedidaException("Capacidade máxima de ingressos atingida para o evento.");
+        }
         if (evento.lotado()) {
         	throw new CapacidadeMaximaExcedidaException("Capacidade máxima de ingressos atingida para o evento.");
         }
         
         repositorio.adicionar(ingresso);
 
-        // Salva as alterações no arquivo
-        repositorio.salvarObjetos();
+
+        repositorio.salvarObjetos();   // Salva as alterações no arquivo
     }
 
 
 
+    //APAGANDO EVENTO
     public static void apagarEvento(int idEvento) {
         Evento eventoParaApagar = repositorio.localizarEvento(idEvento);
         
@@ -126,6 +129,7 @@ public class Fachada {
 
 
 
+    //APAGANDO PARTICIPANTE
     public static void apagarParticipante(String cpf) {
 
         Participante participanteParaApagar = null;
@@ -139,11 +143,10 @@ public class Fachada {
         
         // Verificar se o participante foi encontrado
         if (participanteParaApagar != null) {
-            // Verificar se o último ingresso do participante está ultrapassado
-            if (ultimoIngressoUltrapassado(participanteParaApagar)) {
+            
+            if (ultimoIngressoUltrapassado(participanteParaApagar)) {	// Verificar se o último ingresso do participante está ultrapassado
                 
-            	// Remover todos os ingressos do participante do repositório
-                for (Ingresso ingresso : participanteParaApagar.getIngressos()) {
+                for (Ingresso ingresso : participanteParaApagar.getIngressos()) {	// Remover todos os ingressos do participante do repositório
                     repositorio.removerIngresso(ingresso);
                 }
 
@@ -156,8 +159,6 @@ public class Fachada {
         } else {
             throw new IllegalArgumentException("Participante não encontrado.");
         }
-        
-
 
     } // Final método apagarParticipante
     
@@ -170,13 +171,15 @@ public class Fachada {
 
             // verificar se o ingresso está ultrapassado
 
-            return true; // Retornar true se estiver ultrapassado
+            return true; // true se estiver ultrapassado
         }
 
-        return true; // Se não tiver ingressos, considera que está ultrapassado
+        return true; // Se não tiver ingressos, considero que está ultrapassado
     }
 
 
+    
+    //APAGANDO INGRESSO
     public static void apagarIngresso(String codigoIngresso) {
         Ingresso ingressoParaRemover = repositorio.localizarIngresso(codigoIngresso);
 
@@ -194,11 +197,9 @@ public class Fachada {
     public static ArrayList<Evento> listarEventos() {
         return repositorio.getEventos();
     }
-
     public static ArrayList<Participante> listarParticipantes() {
         return repositorio.getParticipantes() ;
     }
-    
     public static ArrayList<Ingresso> listarIngressos() {
         return repositorio.getIngressos();
     }

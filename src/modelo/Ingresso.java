@@ -82,7 +82,7 @@ public class Ingresso {
 	} // Final do método calcularPreco
 
 
-	//Código para identificar o ingresso com base na regra 11 de Fausto.
+	//Código para identificar o ingresso com base na regra 11 do prof.
 	 private String gerarCodigoIngresso(int idEvento, String cpfParticipante) {
 		 return idEvento + "-" + cpfParticipante;
 	 }

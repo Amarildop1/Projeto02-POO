@@ -12,8 +12,7 @@ public class Evento {
 	private String descricaoEvento;
 	private int capacidadeEvento;
 	private double precoEvento;
-	private ArrayList<Ingresso> ingressos;  // Lista de ingressos associados ao evento
-	//private ArrayList<Evento> eventos = new ArrayList<>();
+	private ArrayList<Ingresso> ingressos;  // ingressos do evento
 
 	
 	public Evento(String dataEvento, String descricaoEvento, int capacidadeEvento, double precoEvento) {
@@ -106,18 +105,10 @@ public class Evento {
         return sb.toString();
     }
 
-/*
-    @Override
-	public String toString() {
-		return "Evento [ID: " + idEvento + ", Data: " + dataEvento + ", Descrição: " + descricaoEvento
-				+ ", Capacidade: " + capacidadeEvento + ", Preço: " + precoEvento + ", Ingressos: " + ingressos + "]";
-	}
-*/
-    
 
 
     public void adicionarIngresso(Ingresso ingresso) {
-        // Se a quantidade de ingressos não ultrapassa a capacidade do evento
+
         if (ingressos.size() < capacidadeEvento) {
             this.ingressos.add(ingresso);
         } else {
@@ -131,18 +122,19 @@ public class Evento {
 	}
 	
 	public double totalArrecadado() {
-		//CALCULAR O VALOR TOTAL DO EVENTO AQUI AINDA NÃO TA FUNCIONANDO 
 	    double total = 0.0;
 
 	    for (Ingresso ingresso : ingressos) {
-	        total += ingresso.calcularPreco();
+	    	double precoIngresso = ingresso.calcularPreco();
+
+	        total += precoIngresso;
 	    }
 
 	    return total;
 	}
 
 
-	//CREIO QUE É CÓDIGO VELHO
+	//Código velho
 	public void adicionar(Ingresso ingresso) {
         this.ingressos.add(ingresso);
     }

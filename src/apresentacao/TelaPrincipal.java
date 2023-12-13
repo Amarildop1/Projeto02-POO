@@ -73,7 +73,7 @@ public class TelaPrincipal extends JFrame{
 		btnIngressos = new JButton("Ingressos");
 		btnIngressos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaIngressos telaIngressos = new TelaIngressos();
+
 				
 			}
 		});
@@ -93,7 +93,7 @@ public class TelaPrincipal extends JFrame{
 		
 		labelTituloPrincipal = new JLabel("Sistema 4ever");
 		labelTituloPrincipal.setFont(new Font("Segoe Print", Font.BOLD, 18));
-		labelTituloPrincipal.setBounds(275, 35, 134, 36);
+		labelTituloPrincipal.setBounds(281, 35, 134, 36);
 		frmSistemaever.getContentPane().add(labelTituloPrincipal);
 		
 		menuBar = new JMenuBar();

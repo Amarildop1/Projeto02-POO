@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class TelaParticipantes extends JFrame{
+public class TelaCriarIngresso extends JFrame{
 
 	private JFrame frame;
 
@@ -15,7 +15,7 @@ public class TelaParticipantes extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaParticipantes window = new TelaParticipantes();
+					TelaCriarIngresso window = new TelaCriarIngresso();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -27,10 +27,13 @@ public class TelaParticipantes extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public TelaParticipantes() {
+	public TelaCriarIngresso() {
+		setTitle("CRIANDO INGRESSO | Sistema 4ever");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		getContentPane().setLayout(null);
 		initialize();
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(this);
+		//frameTelaCriarEvento.setLocationRelativeTo(this); // PRA FUNCIONAR ISSO AQUI, TIVE QUE COLOCAR ESSA JANELA E A PRINCIPAL PRA HERDAR DE JFrame
 	}
 
 	/**
@@ -38,10 +41,8 @@ public class TelaParticipantes extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("PARTICIPANTES | Sistema 4ever - POO");
 		frame.setBounds(100, 100, 539, 433);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }
